@@ -14,11 +14,11 @@ const Navbar = () => {
     <div className="navbar">
       <div className="left">
         <img src={logo} alt="" />
-        <h1>Luhuhub Admin</h1>
+        <h1>Desk Admin</h1>
       </div>
       <div className="right">
         <span>{user.username}</span>
-        <img src={user.image} alt="" />
+        <img src={user?.img} alt="" />
       </div>
     </div>
   )

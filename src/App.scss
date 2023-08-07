@@ -1,0 +1,15 @@
+:root{
+    --background-color:#F4F4F4;
+}
+
+
+.container{
+    display: flex;
+    margin-top: 10px;
+    gap: 5px;
+
+    .link{
+        text-decoration: none;
+        color: inherit;
+    }
+}

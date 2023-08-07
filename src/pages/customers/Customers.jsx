@@ -5,6 +5,7 @@ import deleted from "../../images/delete.png"
 import { useEffect, useState } from "react"
 import {useDispatch, useSelector} from "react-redux"
 import { deleteCustomer, getCustomers} from "../../redux/apiCalls"
+import { userRows } from "../../data"
 
 
 const Customers = () => {
@@ -21,22 +22,7 @@ const Customers = () => {
     getCustomers(dispatch)
   },[dispatch])
 
-  //getting customers created by admin from the customers array
-  const byAdmin = customers.reduce((acc,element) => {
-    if(element.from === "admin"){
-      acc ++
-    }
-    return acc
-  },0)
 
-
-  //getting customers number of customers who registered online from the customers array
-  const website = customers.reduce((acc,element) => {
-    if(element.from === "website"){
-      acc ++
-    }
-    return acc
-  },0)
 
 
    //function to delete
@@ -58,8 +44,9 @@ const Customers = () => {
         </div>
       )
     }},
-    {field:"from",headerName:"Created Through",width:200},
-    {field:"phoneNo",headerName:"Phone Number",width:230},
+    
+    {field:"contact",headerName:"Contact",width:230},
+    {field:"address",headerName:"Address",width:230},
     {field:"action",headerName:"Action",width:140,renderCell:(params)=> {
       return (
         <div className="viewing">
@@ -78,28 +65,17 @@ const Customers = () => {
   return (
     <div className='customers'>
       <div className="top">
-        <h1>Customers</h1>
+        <h1>Users</h1>
         <div className="center">
           <span>All:</span>
           <span>{customers.length}</span>
         </div>
-        <Link to="/customers/new"><button>Create new Customer</button></Link>
+        <Link to="/customers/new"><button>Create new User</button></Link>
       </div>
-      <div className="bottom">
-        <div className="container">
-          <h1>Online</h1>
-          <span>Registered through website</span>
-          <h4>Total: {website}</h4>
-        </div>
-        <div className="container">
-          <h1>Offline</h1>
-          <span>Registered by Admin</span>
-          <h4>Total: {byAdmin}</h4>
-        </div>
-      </div>
-      <h1 className="bb">All customers data.</h1>
+      
+      <h1 className="bb">All users data.</h1>
       <DataGrid
-         {...data}
+         {...customers}
          initialState={{
            ...data.initialState,
            pagination: { paginationModel: { pageSize: 5 } },

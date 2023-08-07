@@ -27,7 +27,7 @@ const Login = () => {
      dispatch({type:"LOGIN_START"})
      try{
 
-      const res = await adminRequests.post("/staffAuth/login",credentials)
+      const res = await adminRequests.post("staffAuth/login",credentials)
       if(res.data.isAdmin){
         dispatch({type:"LOGIN_SUCCESS",payload:res.data.details})
         navigate("/")
@@ -50,10 +50,10 @@ const Login = () => {
   return (
     <div className="login">
         <form>
-          <h5>welcome to the Lukuhub admin dashboard enter credentials to continue</h5>
+          <h5>welcome to the selfHelp desk admin dashboard enter credentials to continue</h5>
             <div className="data">
-                <label>Username</label>
-                <input type="text" id="username" placeholder="enter username" required  onChange={handleChange}/>
+                <label> Email</label>
+                <input type="text" id="email" placeholder="enter username" required  onChange={handleChange}/>
             </div>
             <div className="data">
                 <label>Password</label>

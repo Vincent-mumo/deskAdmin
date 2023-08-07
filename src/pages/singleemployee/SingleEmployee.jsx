@@ -3,8 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
 import "./SingleEmployee.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { updateEmployee } from "../../redux/apiCalls"
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
-import app from "../../firebase"
+import axios from "axios"
 
 const SingleEmployee = () => {
   const [inputs,setInputs] = useState({})
@@ -30,59 +29,34 @@ const SingleEmployee = () => {
     })
   }
 
-  //sending data to db
-  const handleClick = (e) => {
-    e.preventDefault()
-    if(!file){
-      //no file has been selected submit data without changing image
-      const employee = {...inputs}
-      const id = employeeId
-      updateEmployee(id,employee,dispatch)
-      navigate("/employees")
-      //early return to exit the function
-      return
-    }
-
-    //if the image is being changed we have to sent it to firebase
-    const fileName = new Date().getTime() + file.name
-    const storage = getStorage(app)
-    const storageRef = ref(storage,fileName)
-    const uploadTask = uploadBytesResumable(storageRef,file)
-
-   // Register three observers:
-      // 1. 'state_changed' observer, called any time the state changes
-      // 2. Error observer, called on failure
-      // 3. Completion observer, called on successful completion
-       uploadTask.on("state_changed",(snapshot)=> {
-          //Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress = (snapshot.bytesTransferred/snapshot.totalBytes) * 100
-          console.log("Upload is " + progress + "% done");
-
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-          }
-       },
-       (error) => {
-        // Handle unsuccessful uploads
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const employee = { ...inputs, image: downloadURL};
-          updateEmployee(employeeId,employee,dispatch);
-          navigate("/employees")
-        });
+    //function to submit post
+    const handleClick = async (e) => {
+      e.preventDefault()
+       const employee = { ...inputs};
+  
+      if(file){
+          const data = new FormData()
+          data.append("file",file)
+          data.append("upload_preset","upload")
+  
+          try{
+              const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/vmumo/image/upload",data)
+              const {url} = uploadRes.data
+               employee.img = url
+               updateEmployee(employeeId,employee, dispatch);
+               navigate("/employees")
+        
+            }catch(err){
+              console.log(err)
+            }
+  
+      }else{
+        updateEmployee(employeeId,employee, dispatch);
+        navigate("/employees")
       }
-    ); 
   }
+
+  
 
 
 
@@ -96,7 +70,7 @@ const SingleEmployee = () => {
       <div className="center">
         <div className="left">
           <div className="leftTop">
-            <img src={employee.image} alt="" />
+            <img src={employee.img} alt="" />
             <div className="employeeData">
               <span>{employee.username}</span>
               <span>{employee.occupation}</span>
@@ -112,28 +86,28 @@ const SingleEmployee = () => {
               <span>{employee.gender}</span>
             </div>
             <div className="data">
-              <span>Occupation:</span>
-              <span>{employee.occupation}</span>
-            </div>
-            <div className="data">
-              <span>Salary:</span>
-              <span>Ksh {employee.salary}</span>
+              <span>Department:</span>
+              <span>{employee.department}</span>
             </div>
             <div className="data">
               <span>Password:</span>
               <span>Password</span>
             </div>
             <div className="data">
-              <span>National ID:</span>
-              <span>{employee.nationalID}</span>
+              <span>Address:</span>
+              <span>{employee.address}</span>
             </div>
             <div className="data">
-              <span>Phone No:</span>
-              <span>{employee.phoneNo}</span>
+              <span>Contact:</span>
+              <span>{employee.contact}</span>
             </div>
             <div className="data">
               <span>Email:</span>
               <span>{employee.email}</span>
+            </div>
+            <div className="data">
+              <span>isAdmin:</span>
+              <span>{employee.isAdmin}</span>
             </div>
           </div>
         </div>
@@ -150,33 +124,33 @@ const SingleEmployee = () => {
                 <input type="text" name="gender" placeholder={employee.gender} onChange={handleChange}/>
               </div>
               <div className="data">
-                <label>Occupation:</label>
-                <input type="text" name="occupation" placeholder={employee.occupation} onChange={handleChange}/>
+                <label>Department:</label>
+                <input type="text" name="occupation" placeholder={employee.department} onChange={handleChange}/>
               </div>
               <div className="data">
                 <label>Password:</label>
                 <input type="text"  name="password" placeholder="Password" onChange={handleChange}/>
               </div>
               <div className="data">
-                <label>Salary:</label>
-                <input type="number" name="salary" placeholder={employee.salary} onChange={handleChange}/>
+                <label>Address:</label>
+                <input type="text" name="nationalID" placeholder={employee.address} onChange={handleChange}/>
               </div>
               <div className="data">
-                <label>National ID:</label>
-                <input type="text" name="nationalID" placeholder={employee.nationalID} onChange={handleChange}/>
-              </div>
-              <div className="data">
-                <label>Phone:</label>
-                <input type="text"  name="phoneNo" placeholder={employee.phoneNo} onChange={handleChange}/>
+                <label>Contact:</label>
+                <input type="text"  name="phoneNo" placeholder={employee.contact} onChange={handleChange}/>
               </div>
               <div className="data">
                 <label>Email:</label>
                 <input type="text"  name="email" placeholder={employee.email} onChange={handleChange}/>
               </div>
+              <div className="data">
+                <label>isAdmin:</label>
+                <input type="text"  name="isAdmin" placeholder={employee.isAdmin} onChange={handleChange}/>
+              </div>
             </div>
             <div className="formRight">
               <div className="upload">
-                 <img src={file ? URL.createObjectURL(file) : employee.image} alt="" />
+                 <img src={file ? URL.createObjectURL(file) : employee.img} alt="" />
                  <label htmlFor="file">click to upload</label>
                  <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])}/>
               </div>

@@ -2,9 +2,10 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./NewEmployee.scss"
 import { useDispatch } from "react-redux"
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
-import app from "../../firebase"
+
 import { createEmployee } from "../../redux/apiCalls"
+import axios from "axios"
+import { adminRequests } from "../../utils/requestMethods"
 
 const NewEmployee = () => {
   //uploading image
@@ -22,50 +23,33 @@ const NewEmployee = () => {
     })
   }
 
-  //sending data to db
-  const handleClick = (e) => {
+
+  //function to submit post
+  const handleClick = async (e) => {
     e.preventDefault()
-    const fileName = new Date().getTime() + file.name
-    const storage = getStorage(app)
-    const storageRef = ref(storage,fileName)
-    const uploadTask = uploadBytesResumable(storageRef,file)
+     const employee = { ...inputs};
 
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
-      },
-      (error) => {
-        // Handle unsuccessful uploads
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const employee = { ...inputs, image: downloadURL};
-          createEmployee(employee, dispatch);
-          navigate("/employees")
-        });
-      }
-    );
-  }
+    if(file){
+        const data = new FormData()
+        data.append("file",file)
+        data.append("upload_preset","upload")
 
+        try{
+            const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/vmumo/image/upload",data)
+            const {url} = uploadRes.data
+             employee.img = url
+             createEmployee(employee, dispatch);
+             navigate("/employees")
+      
+          }catch(err){
+            console.log(err)
+          }
+
+    }else{
+      createEmployee(employee, dispatch);
+      navigate("/employees")
+    }
+}
 
 
 
@@ -87,12 +71,8 @@ const NewEmployee = () => {
               <input type="text" placeholder="enter gender" name="gender" onChange={handleChange}/>
             </div>
             <div className="data">
-              <label>National ID:</label>
-              <input type="text" placeholder="enter ID" name="nationalID" onChange={handleChange}/>
-            </div>
-            <div className="data">
-              <label>Phone No:</label>
-              <input type="text" placeholder="enter phone" name="phoneNo" onChange={handleChange}/>
+              <label>Contact:</label>
+              <input type="text" placeholder="enter contact" name="contact" onChange={handleChange}/>
             </div>
             <div className="data">
               <label>Email:</label>
@@ -103,12 +83,16 @@ const NewEmployee = () => {
               <input type="password" placeholder="enter password" name="password" onChange={handleChange}/>
             </div>
             <div className="data">
-              <label>Occupation:</label>
-              <input type="text" placeholder="Enter occupation" name="occupation" onChange={handleChange}/>
+              <label>Department:</label>
+              <input type="text" placeholder="Enter department" name="department" onChange={handleChange}/>
             </div>
             <div className="data">
-              <label>Salary:</label>
-              <input type="number" placeholder="enter Salary" name="salary" onChange={handleChange}/>
+              <label>Address:</label>
+              <input type="text" placeholder="address" name="address" onChange={handleChange}/>
+            </div>
+            <div className="data">
+              <label>isAdmin:</label>
+              <input type="text" placeholder="true/false" name="isAdmin" onChange={handleChange}/>
             </div>
           </div>
           <div className="right">

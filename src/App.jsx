@@ -12,6 +12,7 @@ import NewCustomer from "./pages/newcustomer/NewCustomer"
 import Orders from './pages/orders/Orders'
 import Navbar from "./components/navbar/Navbar"
 import Sidebar from "./components/sidebar/Sidebar"
+import "./App.scss"
 
 function App() {
 

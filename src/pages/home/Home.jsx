@@ -5,12 +5,9 @@ import "./Home.scss"
 
 const Home = () => {
 
-
- 
- 
   return (
     <div className="home">
-      home
+      <h1>Welcome to the selfHelp Desk Admin dashboard</h1>
      
     </div>
   )

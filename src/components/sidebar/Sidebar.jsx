@@ -8,20 +8,15 @@ import expenses from '../../images/expenses.png'
 import transactions from "../../images/transactions.png"
 import logout from "../../images/logout.png"
 import { Link, useNavigate } from "react-router-dom"
-import {adminRequests} from "../../utils/requestMethods"
+import { useContext } from "react"
+import {AuthContext} from "../../context/AuthContext"
 
 const Sidebar = () => {
  const navigate = useNavigate()
+ const {dispatch} = useContext(AuthContext)
 
-  const handleLogout = async () => {
-    try {
-      await adminRequests.post("/employeesAuth/logout");
-      localStorage.setItem("user", null);
-      navigate("/login")
-       window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+  const handleLogout =  () => {
+    dispatch({type:"LOGOUT"})
   };
 
 
@@ -37,38 +32,20 @@ const Sidebar = () => {
       <Link to ="/employees" className="link">
        <div className="list">
         <img src={employees} alt="" />
-        <span>Employees</span>
+        <span>Staff</span>
        </div>
       </Link>
       <Link to ="/customers" className="link">
        <div className="list">
         <img src={customers} alt="" />
-        <span>Customers</span>
-       </div>
-      </Link>
-      <Link to ="/products" className="link">
-       <div className="list">
-        <img src={products} alt="" />
-        <span>Products</span>
+        <span>Users</span>
        </div>
       </Link>
       <Link to ="/orders" className="link">
        <div className="list">
         <img src={orders} alt="" />
-        <span>Orders</span>
+        <span>Tickets</span>
        </div>
-       </Link>
-       <Link to ="/expenses" className="link">
-       <div className="list">
-        <img src={expenses} alt="" />
-        <span>Expenses</span>
-       </div>
-       </Link>
-       <Link to ="/transactions" className="link">
-        <div className="list">
-         <img src={transactions} alt="" />
-         <span>Transactions</span>
-        </div>
        </Link>
       <div className="list" onClick={handleLogout}>
         <img src={logout} alt="" />

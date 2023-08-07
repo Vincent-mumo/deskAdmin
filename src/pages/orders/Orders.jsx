@@ -53,10 +53,10 @@ const totalAmount = calculateTotalAmount(orders);
  
   //columns for data grid
   const columns = [
-    {field:"_id",headerName:"Order ID",width:290},
+    {field:"_id",headerName:"Ticket ID",width:290},
     //{field:"products",headerName:"Products",width:190},
-    {field:"customerId",headerName:"Customer ID",width:290},
-    {field:"amount",headerName:"Order Amount",width:140},
+    {field:"userId",headerName:"user ID",width:290},
+    {field:"type",headerName:"Ticket Type",width:140},
     {field:"date",headerName:"Received On",width:200,renderCell:(params)=>{
       //converting createdAt date to the exact date
       const createdAt = new Date(params.row.createdAt);
@@ -87,34 +87,26 @@ const totalAmount = calculateTotalAmount(orders);
     <div className='orders'>
       <div className="top">
         <Link to="/"><button>Go Back</button></Link>
-        <button onClick={() => setOpenOrder(!openOrder)}>Create New order</button>
       </div>
       <div className="center">
         <div className="component">
-          <h1>orders created by admin</h1>
+          <h1>tickets created by admin</h1>
           <div className="no">
             <span>No:</span>
-            <span>15</span>
+            <span>0</span>
           </div>
-          <div className="total">
-            <span>Amount:</span>
-            <span>will be working soon trust me bro for now sorry</span>
-          </div>
+          
         </div>
         <div className="component">
-          <h1>orders from main application</h1>
+          <h1>tickets from main application</h1>
           <div className="no">
             <span>No:</span>
             <span>{number}</span>
           </div>
-          <div className="total">
-            <span>Amount:</span>
-            <span>ksh {totalAmount}</span>
-          </div>
         </div>
       </div>
       <div className="bottom">
-        <h1>All orders</h1>
+        <h1>All Tickets</h1>
       <DataGrid
        {...orders}
        initialState={{

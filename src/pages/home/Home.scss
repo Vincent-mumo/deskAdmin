@@ -1,11 +1,13 @@
 .home{
     flex: 5;
+    display: flex;
     background-color: var(--background-color);
     padding: 5px;
+    align-items: center;
+    justify-content: center;
 
-    .widgets{
-        display: flex;
-        gap: 20px;
-        margin: 20px 5px;
+    h1{
+        font-weight: 300;
     }
+
 }

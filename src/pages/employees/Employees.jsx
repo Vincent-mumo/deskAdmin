@@ -26,7 +26,7 @@ const Employees = () => {
   //fetching gender count
   useEffect(() => {
     const fetchGender = async () => {
-      const res = await adminRequests.get("employees/count/gender")
+      const res = await adminRequests.get("staffs/count/gender")
       setMale(res.data[0].count)
       setFemale(res.data[1].count)   
     }
@@ -43,19 +43,18 @@ const Employees = () => {
   //columns for datagrid
   const columns = [
     {field:"_id",headerName:"ID",width:250},
-    {field:"username",headerName:"Username",width:180,renderCell:(params)=> {
+    {field:"username",headerName:"Staff Name",width:250,renderCell:(params)=> {
       return (
         <div className="employeedata">
-          <img src={params.row.image} alt="" />
+          <img src={params.row.img} alt="" />
           {params.row.username}
         </div>
       )
     }},
-    {field:"occupation",headerName:"Occupation",width:140},
-    {field:"salary",headerName:"Salary",width:100},
-    {field:"phoneNo",headerName:"Phone",width:130},
-    {field:"nationalID",headerName:"National ID",width:130},
-    {field:"action",headerName:"Action",width:140,renderCell:(params)=> {
+    {field:"department",headerName:"Department",width:140},
+    {field:"contact",headerName:"Contact",width:150},
+    {field:"address",headerName:"Address",width:200},
+    {field:"action",headerName:"Action",width:180,renderCell:(params)=> {
       return (
         <div className="viewing">
         <Link to={"/employees/" + params.row._id}>
@@ -73,20 +72,20 @@ const Employees = () => {
     <div className='employees'>
       <div className="top">
         <Link to="/"><button>Go Back</button></Link>
-        <Link to="/employees/new"><button>Create new Employee</button></Link>
+        <Link to="/employees/new"><button>Create new Staff</button></Link>
       </div>
       <div className="center">
         <h3>Summary</h3>
        <div className="detailsWrapper">
        <div className="details">
-          <span>Male Employees</span>
+          <span>Male Staff</span>
           <div className="data">
             <span>No:</span>
             <span>{male}</span>
           </div>
         </div>
         <div className="details">
-          <span>Female Employees</span>
+          <span>Female Staff</span>
           <div className="data">
             <span>No:</span>
             <span>{female}</span>
@@ -94,7 +93,7 @@ const Employees = () => {
         </div>
        </div>
       </div>
-      <h1>All employees data.</h1>
+      <h1>All staffs data.</h1>
       <DataGrid
         rows={employees}
         disableSelectionOnClick
