@@ -1,0 +1,11 @@
+.home{
+    flex: 5;
+    background-color: var(--background-color);
+    padding: 5px;
+
+    .widgets{
+        display: flex;
+        gap: 20px;
+        margin: 20px 5px;
+    }
+}

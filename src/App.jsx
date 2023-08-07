@@ -1,34 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext } from 'react'
+import {AuthContext} from "./context/AuthContext"
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import Login from "./pages/login/Login"
+import Home from "./pages/home/Home"
+import Employees from "./pages/employees/Employees"
+import SingleEmployee from "./pages/singleemployee/SingleEmployee"
+import NewEmployee from "./pages/newemployee/NewEmployee"
+import Customers from "./pages/customers/Customers"
+import SingleCustomer from "./pages/singlecustomer/SingleCustomer"
+import NewCustomer from "./pages/newcustomer/NewCustomer"
+import Orders from './pages/orders/Orders'
+import Navbar from "./components/navbar/Navbar"
+import Sidebar from "./components/sidebar/Sidebar"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const ProtectedRoute = ({children}) => {
+    const {user} = useContext(AuthContext)
+
+    if(!user){
+      return <Navigate to="/login"/>
+    }
+
+    return children
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app">
+       <BrowserRouter>
+         <Routes>
+           <Route path='/login' element={<Login/>}/>
+         </Routes>
+    <ProtectedRoute>
+      <Navbar/>
+     <div className="container">
+      <Sidebar/>
+      <Routes>
+        <Route path='/' element = {<Home/>}/>
+        <Route path='/employees' element={<Employees/>}/>
+        <Route path='/employees/:employeeId' element={<SingleEmployee/>}/>
+        <Route path='/employees/new' element={<NewEmployee/>}/>
+        <Route path='/customers' element={<Customers/>}/>
+        <Route path='/customers/:customerId' element={<SingleCustomer/>}/>
+        <Route path='/customers/new' element={<NewCustomer/>}/>
+        <Route path='/orders' element={<Orders/>}/>
+      </Routes>
+    </div>
+     </ProtectedRoute>
+    </BrowserRouter>
+    </div>
   )
 }
 

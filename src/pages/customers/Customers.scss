@@ -1,0 +1,126 @@
+.customers{
+    flex: 5;
+    background-color: var(--background-color);
+    padding: 5px;
+    height: 100%;
+
+    .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #CCA152;
+        padding: 5px;
+
+        h1{
+            font-weight: 300;
+            font-size: 24px;
+            color: white;
+        }
+
+        .center{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .center :nth-child(1){
+            font-weight: 600;
+            color: white;
+        }
+
+        .center :nth-child(2){
+            font-weight: 300;
+            font-size: 14px;
+        }
+
+        button{
+            width: 160px;
+            font-weight: 300;
+            border: none;
+            padding: 3px;
+            border-radius: 5px;
+            color: #CCA152;
+            cursor: pointer;
+        }
+    }
+
+    .bottom{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: #FAFFE1;
+        height: 200px;
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+            width: 300px;
+            height: 120px;
+            border-radius: 5px;
+            gap: 20px;
+
+            h1{
+                font-weight: 400;
+                font-size: 20px;
+            }
+
+            span{
+                font-weight: 300;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .bb{
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-weight: 300;
+        font-size: 22px;
+        border-bottom: 1px solid #9C5B46;
+    }
+
+    .customerdata{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        img{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border:1px solid #9C5B46;
+        }
+    }
+    
+
+    .viewing{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        
+        button{
+            background-color: #9C5B46;
+            width: 60px;
+            border: none;
+            border-radius: 5px;
+            padding: 3px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    
+        img{
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+    }
+}

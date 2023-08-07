@@ -1,0 +1,112 @@
+.newcustomer{
+    flex: 5;
+    background-color: var(--background-color);
+    padding: 5px;
+    
+    .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        background-color: #f82c85;
+
+        h1{
+            font-weight: 300;
+            font-size: 20px;
+            color: white;
+        }
+
+        button{
+            width: 130px;
+            border: none;
+            border-radius: 5px;
+            padding: 3px;
+            font-weight: 300;
+            color: #f82c85;
+            cursor: pointer;
+        }
+    }
+
+    .bottom{
+        margin-top: 20px;
+        padding: 5px;
+        border: 1px solid #f82c85;
+        display: flex;
+        width: 99%;
+        height: 80%;
+        justify-content: center;
+        align-items: center;
+
+        form{
+           display: flex;
+           gap: 140px;
+
+           .left{
+              display: flex;
+              flex-direction: column;
+              gap: 90px;
+
+               .data{
+                   display: flex;
+                   align-items: center;
+                   gap: 10px;
+
+                   label{
+                      width: 89px;
+                      font-weight: 500;
+                   }
+
+                   input{
+                      outline: none;
+                      border: none;
+                      font-size: 13px;
+                      padding-left: 5px;
+                      font-weight: 300;
+                      padding: 3px;
+                      border-radius: 5px;
+                      text-align: center;
+                   }
+               }
+           }
+
+           .right{
+            display: flex;
+            flex-direction: column;
+
+            .upload{
+                display: flex;
+                flex-direction: column;
+                width: 200px;
+
+                img{
+                    height: 250px;
+                    width: 200px;
+                    border-radius: 5px;
+                }
+
+                label{
+                    font-size: 10px;
+                    margin-top: 3px;
+                    cursor: pointer;
+                    align-self: center;
+                }
+
+                input{
+                    display: none;
+                }
+            }
+
+            button{
+                margin-top: 20px;
+                padding: 3px;
+                border-radius: 5px;
+                border: none;
+                color: white;
+                background-color: #f82c85;
+                cursor: pointer;
+            }
+           }
+        }
+
+    }
+}

@@ -1,0 +1,113 @@
+.newemployee{
+    flex: 5;
+    background-color: var(--background-color);
+    padding: 5px;
+
+    .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #FF9899;
+        padding: 5px;
+        
+        h1{
+            font-size: 21px;
+            font-weight: 300;
+            color: white;
+        }
+
+        button{
+            width: 120px;
+            font-weight: 300;
+            font-size: 13px;
+            border-radius: 5px;
+            padding: 5px;
+            border: none;
+            color: #FF9899;
+            cursor: pointer;
+
+        }
+    }
+
+    .bottom{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border:1px solid #FF9899;
+        margin-top: 20px;
+
+        form{
+            display: flex;
+            justify-content: space-between;
+            padding: 60px 0px;
+            gap: 70px;
+
+            .left{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .data{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+
+                    label{
+                        width: 85px;
+                        font-size: 13px;
+                    }
+
+                    input{
+                        width: 160px;
+                        outline: none;
+                        border: none;
+                        font-size: 12px;
+                        font-weight: 200;
+                        padding-left: 5px;
+                        border-bottom: 1px solid #FF9899;
+                    }
+                }
+            }
+
+            .right{
+                display: flex;
+                flex-direction: column;
+                padding-left: 160px;
+
+                .upload{
+                    display: flex;
+                    flex-direction: column;
+                    width: 200px;
+
+                    img{
+                        height: 250px;
+                        width: 200px;
+                        object-fit: cover;
+                        border-radius: 5px;
+                    }
+
+                    label{
+                        font-size: 10px;
+                        margin-top: 10px;
+                        align-self: center;
+                        cursor: pointer;
+                    }
+
+                    input{
+                        display: none;
+                    }
+                }
+
+                button{
+                    margin-top: 7px;
+                    border: none;
+                    color: white;
+                    cursor: pointer;
+                    background-color: #FF9899;
+                    border-radius: 5px;
+                    padding: 3px;
+                }
+            }
+        }
+    }
+}
